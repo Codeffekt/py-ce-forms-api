@@ -1,0 +1,2 @@
+FORMS_MODULE_NAME = "Forms"
+ASSETS_MODULE_NAME = "Assets"

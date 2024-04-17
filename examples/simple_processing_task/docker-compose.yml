@@ -1,0 +1,22 @@
+version: '2.2'
+services:    
+  py_ce_forms:
+    build: 
+      context: .
+      dockerfile: "Dockerfile"
+    container_name: 'py_ce_forms'
+    image: "py_ce_forms"
+    restart: unless-stopped
+    mem_limit: 8000M
+    cpus: 1
+    ports: 
+      - "8000:8000"    
+    networks:      
+      - diag_network
+    environment:
+      CE_FORMS_BASE_URL: 
+      CE_FORMS_TOKEN:
+networks:
+  diag_network:
+    external: true
+  
