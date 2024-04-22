@@ -9,8 +9,8 @@ class CeFormsClient:
     
     Example:
     
-        >>> import ce_forms
-        >>> client = ce_forms.CeFormsClient()
+        >>> import py_ce_forms_api
+        >>> client = py_ce_forms_api.CeFormsClient()
         >>> client.query().with_root('forms-account').with_sub_forms(False).with_limit(1).call()
     """
     def __init__(self, *args, **kwargs):

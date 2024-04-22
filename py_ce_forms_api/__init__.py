@@ -6,4 +6,4 @@ from .client import CeFormsClient
 from .assets import Assets
 from .processing import Processing, Task, TaskPool
 
-__title__ = 'ce_forms'
+__title__ = 'py_ce_forms_api'

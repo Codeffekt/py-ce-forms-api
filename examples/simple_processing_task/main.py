@@ -1,5 +1,5 @@
 import asyncio
-from ce_forms import *
+from py_ce_forms_api import *
 
 async def my_long_task(task: Task):
     await asyncio.sleep(5)
