@@ -40,7 +40,7 @@ from py_ce_forms_api import CeFormsClient
 ce_forms_client = CeFormsClient(base_url=<CE_FORMS_BASE_URL>, token=<CE_FORMS_TOKEN>)
 
 # Example: Retrieve a list of forms
-forms = ce_forms_client..query().with_sub_forms(False).with_limit(10).call()
+forms = ce_forms_client.query().with_sub_forms(False).with_limit(10).call()
 for form in forms:
     print(form)
 ```

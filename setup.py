@@ -1,15 +1,21 @@
 from setuptools import setup, find_packages
 
+# read the contents of your README file
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
+
 VERSION = '0.0.5'
 DESCRIPTION = 'A Python library for the CeForms API.'
 
 setup(
-    name="ce_forms",
+    name="py_ce_forms_api",
     version=VERSION,
     author='codeffekt',
     author_email='contact@codeffekt.com',
     description=DESCRIPTION,
-    long_description='',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     packages=find_packages(),
     install_requires=['requests','fastapi','uvicorn'],
     keywords=['python', 'ceforms', 'api'],
