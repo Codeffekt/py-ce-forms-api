@@ -11,12 +11,7 @@ services:
     cpus: 1
     ports: 
       - "8000:8000"    
-    networks:      
-      - diag_network
     environment:
       CE_FORMS_BASE_URL: 
       CE_FORMS_TOKEN:
-networks:
-  diag_network:
-    external: true
-  
+
