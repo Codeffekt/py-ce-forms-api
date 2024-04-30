@@ -26,7 +26,10 @@ class APIClient():
         if token is None:
             self.token = os.environ.get("CE_FORMS_TOKEN")
         else:    
-            self.token = token
+            self.token = token            
+        
+        if self.base_url is None or self.token is None:
+            raise TypeError("Invalid base_url or token None value")
         
     def self(self):
         response = requests.get(f'{self.base_url}/self', auth=BearerAuth(self.token))

@@ -1,5 +1,6 @@
 from ..api.client import APIClient
 from ..api.modules import *
+from .forms_res import FormsRes
 
 class FormsQuery():
     """
@@ -59,12 +60,12 @@ class FormsQuery():
         return self
     
     def call(self):
-        return self.client.call_forms_query({
+        return FormsRes(self.client.call_forms_query({
                     "extMode": self.extMode,
                     "limit": self.limit,
                     "offset": self.offset,
                     "queryFields": self.query_fields
-                }, self.module_name)
+                }, self.module_name))
     
     def call_single(self, id: str):
         return self.client.call_form_query(id, {
