@@ -6,12 +6,16 @@ from .exceptions import *
 
 class APIClient():
     """
-    A low-level client for the CeForms API.
+    A low-level client for the CeForms API.    
     
     Example:
     
         >>> import ce_forms
-        >>> client = ce_forms.APIClient(base_url='', token='')        
+        >>> client = ce_forms.APIClient(base_url='', token='')
+        
+    Args:
+        base_url (str): URL to the CeForms API server.
+        token (str): API token provided by a CeForms backend.
     
     """
     
