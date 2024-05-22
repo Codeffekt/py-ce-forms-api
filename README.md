@@ -1,17 +1,5 @@
 # Py Ce Forms Api
 
-## Development
-
- > pip install -e .
-
-### package building
-
- > python3 setup.py sdist bdist_wheel
-
-### package publishing
-
- > python3 -m twine upload --repository <repository> dist/*
-
 ## Quickstart
 
 ### Introduction
@@ -46,3 +34,19 @@ for form in forms:
 ```
 
 Replace <CE_FORMS_BASE_URL> and <CE_FORMS_TOKEN> with your actual base URL and authentication token, respectively.
+
+## SDK Documentation
+
+See *[CeForms SDK for Python](https://py-ce-forms-api.readthedocs.io/en/latest/index.html)*
+
+## Development
+
+ > pip install -e .
+
+### package building
+
+ > python3 setup.py sdist bdist_wheel
+
+### package publishing
+
+ > python3 -m twine upload --repository <repository> dist/*
