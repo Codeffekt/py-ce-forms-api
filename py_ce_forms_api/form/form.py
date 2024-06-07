@@ -20,13 +20,13 @@ class Form:
     def id(self):
         return self.form["id"]
     
-    def __str__(self) -> str:
-        modified_at = f'modified at {self.mtime().isoformat(" ", "seconds")}' if self.form["mtime"] is not None else ''
+    def __str__(self) -> str:        
+        modified_at = f'modified at {self.mtime().isoformat(" ", "seconds")}' if self.form.get("mtime") is not None else ''
         return f'Form {self.form["id"]} from root {self.form["root"]} {modified_at} created at {self.ctime().isoformat(" ", "seconds")}'
     
     def ctime(self) -> datetime:
         return datetime.fromtimestamp(self.form["ctime"] / 1000)
     
     def mtime(self) -> datetime|None:
-        return datetime.fromtimestamp(self.form["mtime"] / 1000) if self.form["mtime"] is not None else None
+        return datetime.fromtimestamp(self.form["mtime"] / 1000) if self.form.get("mtime") is not None else None
     
