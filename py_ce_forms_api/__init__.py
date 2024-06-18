@@ -5,5 +5,6 @@ from .accounts import Accounts
 from .client import CeFormsClient
 from .assets import Assets
 from .processing import Processing, Task, TaskPool
+from .projects import Projects, Project
 
 __title__ = 'py_ce_forms_api'

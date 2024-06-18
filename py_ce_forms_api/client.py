@@ -3,6 +3,8 @@ from .query import FormsQuery, FormMutate
 from .accounts.accounts import Accounts
 from .assets.assets import Assets
 from .processing.processing import Processing
+from .projects.projects import Projects
+
 class CeFormsClient:
     """
     A client form communication with a CeForms server.
@@ -73,6 +75,13 @@ class CeFormsClient:
         see :doc:`processing documentation <processing>` for full details.
         """
         return Processing(self.api, task)
+
+    def projects(self):
+        """
+        Returns the module to manage CeForms projects.
+        see :doc:`projects documentation <projects>` for full details.
+        """
+        return Projects(self.api, self.assets())
 
     
     
