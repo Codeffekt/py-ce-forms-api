@@ -3,7 +3,7 @@ from py_ce_forms_api import *
 
 def main(root):
     client = CeFormsClient()
-    forms = client.query().with_root(root).with_sub_forms(False).with_limit(10).call()
+    forms = client.query().with_root(root).with_limit(10).call()
 
     for form in forms.forms():
         print(form)

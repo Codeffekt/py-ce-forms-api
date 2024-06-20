@@ -4,6 +4,7 @@ from .accounts.accounts import Accounts
 from .assets.assets import Assets
 from .processing.processing import Processing
 from .projects.projects import Projects
+from .forms.forms import Forms
 
 class CeFormsClient:
     """
@@ -81,7 +82,15 @@ class CeFormsClient:
         Returns the module to manage CeForms projects.
         see :doc:`projects documentation <projects>` for full details.
         """
-        return Projects(self.api, self.assets())
+        return Projects(self.api)
+    
+    def forms(self):
+        """
+        Returns the module to manage CeForms forms.
+        see :doc:`forms documentation <forms>` for full details.
+        """
+        return Forms(self.api)
+        
 
     
     

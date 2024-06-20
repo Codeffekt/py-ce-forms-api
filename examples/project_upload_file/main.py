@@ -3,7 +3,8 @@ from py_ce_forms_api import *
 
 def main(pid, file_path):
     client = CeFormsClient()
-    res = client.projects().upload_file(pid, file_path)
+    project = client.projects().get_project(pid)
+    res = client.assets().upload_file_to_project(project, file_path)
     print(res)
 
 if __name__ == '__main__':

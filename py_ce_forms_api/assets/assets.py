@@ -2,6 +2,7 @@ import os
 import mimetypes
 from ..api.client import APIClient
 from ..api.modules import ASSETS_MODULE_NAME
+from ..projects import Project
 
 class Assets():
     """
@@ -24,6 +25,12 @@ class Assets():
         bucket = self.create_bucket(ref)
         mimetype = self._find_mimetype_from_filename(os.path.basename(file_path))          
         return self.upload_file_to_bucket(bucket_id=bucket['id'], file_path=file_path, mimetype=mimetype)
+    
+    def upload_file_to_project(self, project: Project, file_path: str):
+        """
+        Upload a new asset to the specified project.
+        """
+        return self.upload_file(project.get_asset_ref(), file_path)
     
     def _find_mimetype_from_filename(self, filename: str): 
         mimetype = mimetypes.guess_type(filename)[0]        

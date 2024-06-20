@@ -1,20 +1,22 @@
 from ..api.client import APIClient
 from ..api.modules import *
 from .forms_res import FormsRes
-from .forms_res_iterable import FormsResIterable
 
 class FormsQuery():
     """
     An utility class to query the forms dataset.
     """
     
-    def __init__(self, client: APIClient) -> None:
+    def __init__(self, client: APIClient) -> None:        
         self.limit = 10
         self.offset = 0
         self.extMode = False
         self.client = client
         self.query_fields = []
         self.module_name = FORMS_MODULE_NAME
+        self.ref = None
+        self.root = None
+        self.call_args = []
         
     def with_root(self, root: str):
         self._add_query_field({
@@ -50,10 +52,18 @@ class FormsQuery():
     
     def with_offset(self, offset: int):
         self.offset = offset
-        return self
+        return self    
+    
+    def with_ref(self, ref: str):
+        self.ref = ref
+        return self      
     
     def with_module_name(self, module_name: str):
         self.module_name = module_name
+        return self    
+    
+    def with_args(self, args):
+        self.call_args = args
         return self
     
     def _add_query_field(self, qf):
@@ -65,18 +75,19 @@ class FormsQuery():
                     "extMode": self.extMode,
                     "limit": self.limit,
                     "offset": self.offset,
-                    "queryFields": self.query_fields
-                }
+                    "queryFields": self.query_fields,
+                    "ref": self.ref                    
+                }      
 
-    def call(self):
+    def call(self):                
         return FormsRes(self.client.call_forms_query(
-            self._create_raw_query(), self.module_name))
-    
-    def iterable(self) -> FormsResIterable:
-        return FormsResIterable(self)
+            self.call_args + [ self._create_raw_query() ], self.module_name))        
 
     def call_single(self, id: str):
         return self.client.call_form_query(
             id, self._create_raw_query(), self.module_name)
+    
+    def __str__(self) -> str:   
+        return f'{self.module_name}\n{str(self._create_raw_query())}\n{str(self.call_args)}'
     
     

@@ -1,9 +1,10 @@
 from py_ce_forms_api import *
 
 client = CeFormsClient()
-forms = client.query().with_sub_forms(False).with_limit(10).call()
+res = FormsResIterable(client.query())
 
-for form in forms.forms():
-    print(form)
+for forms in res:    
+    for form in forms.forms():
+        print(form)
 
 

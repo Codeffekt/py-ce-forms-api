@@ -42,10 +42,10 @@ class APIClient():
     def call_module(self, func, params, module_name):
         return self.call(f'Public{module_name}', func_name=func, func_params=params)
     
-    def call_forms_query(self, query, module_name = FORMS_MODULE_NAME):
+    def call_forms_query(self, params, module_name = FORMS_MODULE_NAME):        
         return self.call_module(
             func="getFormsQuery",
-            params=[query],
+            params=params,
             module_name=module_name
         )           
     

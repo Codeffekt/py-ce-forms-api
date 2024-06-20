@@ -1,10 +1,11 @@
 from datetime import datetime
 from .form_block import FormBlock
+from .form_block_assoc import FormBlockAssoc
 class Form:
     """
     An utility class to manipulate form properties
     """
-    def __init__(self, form) -> None:
+    def __init__(self, form) -> None:        
         self.form = form
     
     def set_value(self, field: str, value):
@@ -15,7 +16,10 @@ class Form:
         return self.get_block(field).get_value()        
     
     def get_block(self, field: str) -> FormBlock:
-        return FormBlock(self.form["content"][field])
+        return FormBlock(self, self.form["content"][field])
+    
+    def get_assoc(self, field: str) -> FormBlockAssoc:
+        return FormBlockAssoc(self.get_block(field))
     
     def id(self):
         return self.form["id"]

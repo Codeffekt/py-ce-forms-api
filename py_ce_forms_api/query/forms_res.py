@@ -9,7 +9,7 @@ class FormsRes():
         self.res = res
         
         if self.res is None:
-            raise TypeError('Invalid result type None')
+            raise TypeError('Invalid result type None')        
         
         self._forms = map(lambda f: Form(f), self.elts())
     

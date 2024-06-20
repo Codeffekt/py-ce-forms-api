@@ -37,7 +37,7 @@ class TaskPool():
        return  next(t for t in self.tasks if t.is_current_processing(pid))
     
     def run(self, pid: str):
-        form = Form(self.__retrieve_processing(pid))
+        form = self.__retrieve_processing(pid)
         asyncio.create_task(self.__handle_processing(form))
         return form
       
@@ -47,7 +47,7 @@ class TaskPool():
         return task.get_form().form
         
     def __retrieve_processing(self, pid: str):
-        return FormsQuery(self.client).with_sub_forms().call_single(pid)  
+        return Form(FormsQuery(self.client).with_sub_forms().call_single(pid))  
         
     async def __handle_processing(self, form: Form):         
         task = Task(self.client, self.function, form)

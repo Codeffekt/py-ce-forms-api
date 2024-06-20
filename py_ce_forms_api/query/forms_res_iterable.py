@@ -9,21 +9,24 @@ class FormsResIterable():
         self.query = query        
         self.res = None
 
-    def __iter__(self):        
-        return self
-
-    def _next__(self): 
+    def __iter__(self):          
         if self.res is None:       
             self.res = self.query.call()
-            return self.res
-        else:
+            yield self.res
+
+        if self.res.limit() == 0:
+            return
+
+        limit = self.res.limit()
+        offset = self.res.offset()
+        total = self.res.total()                
+        
+        while (offset + limit) < total and (len(self.res) == limit):
+            self.query.with_offset(offset + limit)
+            self.res = self.query.call()
             limit = self.res.limit()
             offset = self.res.offset()
-            total = self.res.total()
-            if limit == 0 or (offset + limit) >= total or (len(self.res) < limit):
-                return StopIteration
-            else:
-                self.query.with_offset(offset + limit)
-                self.res = self.query.call()
-                return self.res
+            total = self.res.total()                     
+            yield self.res                                        
+        
             

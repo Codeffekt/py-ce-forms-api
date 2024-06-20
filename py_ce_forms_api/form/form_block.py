@@ -5,8 +5,21 @@ class FormBlock:
     """
     An utility class to manipulate form block values
     """
-    def __init__(self, block) -> None:
+    def __init__(self, form, block) -> None:
+        self.form = form
         self.block = block
+    
+    def get_form(self):
+        return self.form
+    
+    def get_type(self):
+        return self.block["type"]
+    
+    def get_field(self):
+        return self.block["field"]
+    
+    def get_block_attr(self, field: str):
+        return self.block[field]
     
     def get_value(self):
         if self.block["value"] is None:
