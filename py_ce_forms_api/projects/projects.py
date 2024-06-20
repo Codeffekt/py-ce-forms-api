@@ -35,3 +35,8 @@ class Projects():
         Returns the specified project.
         """
         return Project(Form(FormsQuery(self.client).with_root(self.root).call_single(pid)))
+    
+    def get_projectassoc(self, pid: str, assoc: str) -> FormRes:
+        """
+        
+        """

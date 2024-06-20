@@ -1,6 +1,7 @@
 from ..api.client import APIClient
 from ..api.modules import *
 from .forms_res import FormsRes
+from .forms_res_iterable import FormsResIterable
 
 class FormsQuery():
     """
@@ -59,20 +60,23 @@ class FormsQuery():
         self.query_fields.append(qf)
         return self
     
+    def _create_raw_query(self):
+        return {
+                    "extMode": self.extMode,
+                    "limit": self.limit,
+                    "offset": self.offset,
+                    "queryFields": self.query_fields
+                }
+
     def call(self):
-        return FormsRes(self.client.call_forms_query({
-                    "extMode": self.extMode,
-                    "limit": self.limit,
-                    "offset": self.offset,
-                    "queryFields": self.query_fields
-                }, self.module_name))
+        return FormsRes(self.client.call_forms_query(
+            self._create_raw_query(), self.module_name))
     
+    def iterable(self) -> FormsResIterable:
+        return FormsResIterable(self)
+
     def call_single(self, id: str):
-        return self.client.call_form_query(id, {
-                    "extMode": self.extMode,
-                    "limit": self.limit,
-                    "offset": self.offset,
-                    "queryFields": self.query_fields
-                }, self.module_name)
+        return self.client.call_form_query(
+            id, self._create_raw_query(), self.module_name)
     
     

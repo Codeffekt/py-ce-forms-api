@@ -5,7 +5,7 @@ class FormsRes():
     An utility class to manage query results on the forms dataset
     """
     
-    def __init__(self, res) -> None:
+    def __init__(self, res) -> None:        
         self.res = res
         
         if self.res is None:
@@ -22,7 +22,15 @@ class FormsRes():
     def total(self):
         return self.res['total']
     
+    def limit(self):
+        return self.res['limit']
+
+    def offset(self):
+        return self.res['offset']
+
     def __len__(self):
         return len(self.res['elts'])
     
+    
+            
 

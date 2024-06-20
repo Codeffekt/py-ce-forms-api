@@ -1,6 +1,6 @@
 from .api import APIClient
 from .form import Form, FormBlock
-from .query import FormsQuery, FormMutate, FormsRes
+from .query import FormsQuery, FormMutate, FormsRes, FormsResIterable
 from .accounts import Accounts
 from .client import CeFormsClient
 from .assets import Assets
