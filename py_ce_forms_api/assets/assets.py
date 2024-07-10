@@ -32,6 +32,12 @@ class Assets():
         """
         return self.upload_file(project.get_asset_ref(), file_path)
     
+    def download_file(self, id: str):
+        """
+        Download the asset.
+        """
+        return self.client.call_download(id)
+    
     def _find_mimetype_from_filename(self, filename: str): 
         mimetype = mimetypes.guess_type(filename)[0]        
         if mimetype is None:            

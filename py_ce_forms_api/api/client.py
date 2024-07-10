@@ -68,6 +68,16 @@ class APIClient():
         )        
         return response.json()
     
+    def call_download(self, id: str):
+        response = requests.get(
+            self._get_api(f'assets/download/{id}'),
+            auth=BearerAuth(self.token)
+        )
+        if response.status_code == 200:
+            return response.content
+        else:
+            self._handle_api_error(response)        
+    
     def call_mutation(self, mutation, module_name = FORMS_MODULE_NAME):
         return self.call_module(
             func="formMutation",

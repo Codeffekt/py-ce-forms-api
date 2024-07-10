@@ -6,6 +6,10 @@ class Form:
     An utility class to manipulate form properties
     """
     def __init__(self, form) -> None:        
+        
+        if form is None:
+            raise TypeError("Invalid none form passed, maybe the underlying form was not found")
+        
         self.form = form
     
     def set_value(self, field: str, value):

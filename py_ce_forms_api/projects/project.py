@@ -7,6 +7,10 @@ class Project:
     asset_field = "_assets"
 
     def __init__(self, form: Form) -> None:
+        
+        if form is None:
+            raise TypeError("Invalid none Form object passed, maybe the underlying form was not found")
+        
         self.form = form         
     
     def id(self) -> str:
