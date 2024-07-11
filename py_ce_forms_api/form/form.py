@@ -1,3 +1,4 @@
+from __future__ import annotations
 from datetime import datetime
 from .form_block import FormBlock
 from .form_block_assoc import FormBlockAssoc
@@ -24,6 +25,17 @@ class Form:
     
     def get_assoc(self, field: str) -> FormBlockAssoc:
         return FormBlockAssoc(self.get_block(field))
+    
+    def get_sub_form(self, field: str) -> Form:
+        if self.form.get("fields") is None or self.form["fields"].get(field) is None:
+            raise Exception(f"Form {self.id()} has no subform {field}")
+        return Form(self.form["fields"][field])
+    
+    def get_root(self) -> str:
+        return self.form["root"]
+    
+    def get_type(self) -> str:
+        return self.form["type"]
     
     def id(self):
         return self.form["id"]

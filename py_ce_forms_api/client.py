@@ -3,6 +3,7 @@ from .query import FormsQuery, FormMutate
 from .accounts.accounts import Accounts
 from .assets.assets import Assets
 from .processing.processing import Processing
+from .processing_client.processing_client import ProcessingClient
 from .projects.projects import Projects
 from .forms.forms import Forms
 
@@ -76,6 +77,13 @@ class CeFormsClient:
         see :doc:`processing documentation <processing>` for full details.
         """
         return Processing(self.api, task)
+
+    def processing_client(self, pid):
+        """
+        Returns the entry point to remotely/locally call a processing.
+        see: :doc:`processing_client documentation <processing_client>` for full details.
+        """
+        return ProcessingClient(self.api, pid)
 
     def projects(self):
         """

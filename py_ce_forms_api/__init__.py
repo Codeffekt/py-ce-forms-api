@@ -5,6 +5,7 @@ from .accounts import Accounts
 from .client import CeFormsClient
 from .assets import Assets
 from .processing import Processing, Task, TaskPool
+from .processing_client import ProcessingClient
 from .projects import Projects, Project
 from .forms import Forms
 
