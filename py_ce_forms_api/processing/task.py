@@ -34,6 +34,9 @@ class Task():
     def status(self):
         return self.form
     
+    def get_client(self) -> APIClient:
+        return self.client
+    
     def update(self, message: str):
         self.form.set_value("message", message)
         self.__update_processing_status("RUNNING")                

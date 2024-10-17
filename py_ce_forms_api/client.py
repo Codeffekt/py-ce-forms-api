@@ -1,5 +1,5 @@
 from .api.client import APIClient
-from .query import FormsQuery, FormMutate
+from .query import FormsQuery, FormMutate, FormsQueryArray
 from .accounts.accounts import Accounts
 from .assets.assets import Assets
 from .processing.processing import Processing
@@ -50,6 +50,13 @@ class CeFormsClient:
         """
         return FormsQuery(self.api)
     
+    def query_array(self):
+        """
+        Returns the module to manage forms queries on array.
+        see :doc:`query documentation <query>` for full details.
+        """
+        return FormsQueryArray(self.api)
+    
     def mutation(self):
         """
         Returns the module to manage forms mutations.
@@ -98,6 +105,9 @@ class CeFormsClient:
         see :doc:`forms documentation <forms>` for full details.
         """
         return Forms(self.api)
+    
+    def get_api(self) -> APIClient:
+        return self.api
         
 
     

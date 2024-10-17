@@ -56,6 +56,13 @@ class APIClient():
             module_name=module_name
         )
     
+    def call_forms_query_array(self, id: str, field: str, query, module_name = FORMS_MODULE_NAME):
+        return self.call_module(
+            func="getFormsQueryArray",
+            params=[id, field, query],
+            module_name=module_name
+        )
+    
     def call(self, class_name, func_name, func_params):
         return self._call(self._create_call_post(class_name, func_name, func_params))
     
