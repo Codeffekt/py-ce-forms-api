@@ -23,7 +23,8 @@ class Task():
             self.task = asyncio.create_task(self.function(self))
             await self.task
             self.__finished()
-        except Exception:
+        except Exception as err:
+            print(err)
             self.__failed()      
         
     def cancel(self):
