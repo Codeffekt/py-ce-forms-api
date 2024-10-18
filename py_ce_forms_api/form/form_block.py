@@ -1,5 +1,6 @@
 import math
 from datetime import datetime
+from .form_utils import FormUtils
 
 class FormBlock:
     TEXT_TYPE = "text"
@@ -49,6 +50,8 @@ class FormBlock:
                 return map(lambda x: float(x), self.block["value"]) if type(self.block["value"]) == list else None
             except ValueError:
                 return None
+        if self.block["type"] == FormBlock.ASSET_ARRAY_TYPE:
+            return FormUtils.eval(self.get_form(), self.block["value"])        
             
         return self.block["value"]
 

@@ -2,7 +2,8 @@ from __future__ import annotations
 from datetime import datetime
 from .form_block import FormBlock
 from .form_block_assoc import FormBlockAssoc
-from .form_block_asset_array import FormBlockAssetArray
+from .form_block_asset_array import FormBlockAssetArray 
+from .form_block_factory import FormBlockFactory
 class Form:
     """
     An utility class to manipulate form properties
@@ -28,7 +29,7 @@ class Form:
         return FormBlockAssoc(self.get_block(field))
     
     def get_asset_array(self, field: str) -> FormBlockAssetArray:
-        return FormBlockAssetArray(self.get_block(field))
+        return FormBlockFactory.create_asset_array(self.get_block(field))
     
     def get_sub_form(self, field: str) -> Form:
         if self.form.get("fields") is None or self.form["fields"].get(field) is None:
@@ -53,4 +54,5 @@ class Form:
     
     def mtime(self) -> datetime|None:
         return datetime.fromtimestamp(self.form["mtime"] / 1000) if self.form.get("mtime") is not None else None
+            
     

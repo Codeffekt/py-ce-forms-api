@@ -19,18 +19,19 @@ class Assets():
         return self.client.call_module(module_name=ASSETS_MODULE_NAME, func="deleteAssets", params=[ref, [id]])
     
     def upload_file_to_bucket(self, bucket_id: str, file_path: str, mimetype = "text/plain"):
-        return self.client.call_upload(bucket_id=bucket_id, file_path=file_path,mimetype=mimetype)
+        return self.client.call_upload(bucket_id=bucket_id, file_path=file_path, mimetype=mimetype)
     
-    def upload_file(self, ref: str, file_path: str):
+    def upload_file(self, ref: str, file_path: str, mimetype: str = None):
         bucket = self.create_bucket(ref)
-        mimetype = self._find_mimetype_from_filename(os.path.basename(file_path))          
+        if mimetype is None:
+            mimetype = self._find_mimetype_from_filename(os.path.basename(file_path))          
         return self.upload_file_to_bucket(bucket_id=bucket['id'], file_path=file_path, mimetype=mimetype)
     
-    def upload_file_to_asset_array(self, block: FormBlockAssetArray, file_path: str):
+    def upload_file_to_asset_array(self, block: FormBlockAssetArray, file_path: str, mimetype: str = None):
         """
         Upload a new asset to the specified asset array block.
         """
-        return self.upload_file(block.get_ref(), file_path)
+        return self.upload_file(block.get_ref(), file_path, mimetype=mimetype)
     
     def download_file(self, id: str):
         """

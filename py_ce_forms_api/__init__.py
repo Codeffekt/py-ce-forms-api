@@ -1,5 +1,5 @@
 from .api import APIClient
-from .form import Form, FormBlock, FormBlockAssoc, FormBlockAssetArray
+from .form import Form, FormBlock, FormBlockAssoc, FormBlockAssetArray, FormUtils, FormBlockFactory
 from .query import FormsQuery, FormMutate, FormsRes, FormsResIterable, FormsQueryArray
 from .accounts import Accounts
 from .client import CeFormsClient

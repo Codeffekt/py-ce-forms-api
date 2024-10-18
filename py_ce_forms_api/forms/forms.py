@@ -1,5 +1,5 @@
 from ..api.client import APIClient
-from ..query import FormsQuery, FormsResIterable
+from ..query import FormsQuery, FormsResIterable, FormMutate
 from ..form import Form, FormBlockAssoc
 
 class Forms():
@@ -20,5 +20,5 @@ class Forms():
         return Form(FormsQuery(self.client).call_single(fid))
     
     def get_form_assoc(self, block: FormBlockAssoc) -> FormsResIterable:        
-        return FormsResIterable(FormsQuery(self.client).with_ref(block.get_ref()))
+        return FormsResIterable(FormsQuery(self.client).with_ref(block.get_ref()))        
         
