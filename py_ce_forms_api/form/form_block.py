@@ -2,6 +2,14 @@ import math
 from datetime import datetime
 
 class FormBlock:
+    TEXT_TYPE = "text"
+    NUMBER_TYPE = "number"
+    BOOLEAN_TYPE = "boolean"
+    TIMESTAMP_TYPE = "timestamp"
+    COORDINATES_TYPE = "coordinates"
+    FORM_ARRAY_TYPE = "formArray"
+    ASSET_ARRAY_TYPE = "assetArray"
+    
     """
     An utility class to manipulate form block values
     """
@@ -24,11 +32,11 @@ class FormBlock:
     def get_value(self):
         if self.block["value"] is None:
             return None
-        if self.block["type"] == "number":
+        if self.block["type"] == FormBlock.NUMBER_TYPE:
             return self._get_float_value(self.block["value"])
-        if self.block["type"] == "boolean":
+        if self.block["type"] == FormBlock.BOOLEAN_TYPE:
             return bool(self.block["value"]) if self.block["value"] != "false" else False
-        if self.block["type"] == "timestamp":
+        if self.block["type"] == FormBlock.TIMESTAMP_TYPE:
             num_value = self._get_float_value(self.block["value"])
             if num_value is None or math.isnan(num_value):
                 return None
@@ -36,7 +44,7 @@ class FormBlock:
                 return datetime.fromtimestamp(int(num_value) / 1000)
             except ValueError:
                 return None
-        if self.block["type"] == "coordinates":
+        if self.block["type"] == FormBlock.COORDINATES_TYPE:
             try:
                 return map(lambda x: float(x), self.block["value"]) if type(self.block["value"]) == list else None
             except ValueError:
@@ -48,7 +56,7 @@ class FormBlock:
         if value is None:
             self.block["value"] = value
             return
-        if self.block["type"] == "timestamp" and type(value) == datetime:
+        if self.block["type"] == FormBlock.TIMESTAMP_TYPE and type(value) == datetime:
             self.block["value"] = int(value.timestamp())
             return
         self.block["value"] = value

@@ -2,6 +2,7 @@ from __future__ import annotations
 from datetime import datetime
 from .form_block import FormBlock
 from .form_block_assoc import FormBlockAssoc
+from .form_block_asset_array import FormBlockAssetArray
 class Form:
     """
     An utility class to manipulate form properties
@@ -25,6 +26,9 @@ class Form:
     
     def get_assoc(self, field: str) -> FormBlockAssoc:
         return FormBlockAssoc(self.get_block(field))
+    
+    def get_asset_array(self, field: str) -> FormBlockAssetArray:
+        return FormBlockAssetArray(self.get_block(field))
     
     def get_sub_form(self, field: str) -> Form:
         if self.form.get("fields") is None or self.form["fields"].get(field) is None:

@@ -6,8 +6,8 @@ project = 'CeForms SDK for Python'
 copyright = '2024, Codeffekt'
 author = 'Codeffekt'
 
-release = '0.0.7'
-version = '0.0.7'
+release = '0.1.3'
+version = '0.1.3'
 
 # -- General configuration
 

@@ -39,8 +39,8 @@ Replace <CE_FORMS_BASE_URL> and <CE_FORMS_TOKEN> with your actual base URL and a
   client
   api
   query
+  query_array
   accounts  
-  projects
   forms
   assets
   processing

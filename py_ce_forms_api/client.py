@@ -3,7 +3,6 @@ from .query import FormsQuery, FormMutate, FormsQueryArray
 from .accounts.accounts import Accounts
 from .assets.assets import Assets
 from .processing_client.processing_client import ProcessingClient
-from .projects.projects import Projects
 from .forms.forms import Forms
 
 class CeFormsClient:
@@ -52,7 +51,7 @@ class CeFormsClient:
     def query_array(self):
         """
         Returns the module to manage forms queries on array.
-        see :doc:`query documentation <query>` for full details.
+        see :doc:`query documentation <query_array>` for full details.
         """
         return FormsQueryArray(self.api)
     
@@ -83,13 +82,6 @@ class CeFormsClient:
         see: :doc:`processing_client documentation <processing_client>` for full details.
         """
         return ProcessingClient(self.api, pid)
-
-    def projects(self):
-        """
-        Returns the module to manage CeForms projects.
-        see :doc:`projects documentation <projects>` for full details.
-        """
-        return Projects(self.api)
     
     def forms(self):
         """
