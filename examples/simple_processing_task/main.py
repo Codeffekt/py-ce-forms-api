@@ -11,7 +11,7 @@ async def my_long_task(task: Task):
 
 def create_app():
     client = CeFormsClient()
-    processing = client.processing(my_long_task)
+    processing = Processing(client, my_long_task)
     return processing.get_app()
 
 

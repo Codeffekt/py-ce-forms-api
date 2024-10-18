@@ -2,7 +2,6 @@ from .api.client import APIClient
 from .query import FormsQuery, FormMutate, FormsQueryArray
 from .accounts.accounts import Accounts
 from .assets.assets import Assets
-from .processing.processing import Processing
 from .processing_client.processing_client import ProcessingClient
 from .projects.projects import Projects
 from .forms.forms import Forms
@@ -76,14 +75,7 @@ class CeFormsClient:
         Returns the module to manage assets (files, media).
         see :doc:`assets documentation <assets>` for full details.
         """
-        return Assets(self.api)
-    
-    def processing(self, task):
-        """
-        Returns the module to manage processing.
-        see :doc:`processing documentation <processing>` for full details.
-        """
-        return Processing(self.api, task)
+        return Assets(self.api)    
 
     def processing_client(self, pid):
         """
@@ -106,8 +98,7 @@ class CeFormsClient:
         """
         return Forms(self.api)
     
-    def get_api(self) -> APIClient:
-        return self.api
+    
         
 
     

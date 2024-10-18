@@ -1,7 +1,7 @@
 import asyncio
 
 from ..form.form import Form
-from ..api.client import APIClient
+from ..client import CeFormsClient
 from ..query import FormsQuery
 from .task import Task
 
@@ -11,7 +11,7 @@ class TaskPool():
     processing api
     """
     
-    def __init__(self, client: APIClient, function, maxLength) -> None:
+    def __init__(self, client: CeFormsClient, function, maxLength) -> None:
         self.client = client
         self.function = function
         self.tasks: list[Task] = []
@@ -47,7 +47,7 @@ class TaskPool():
         return task.get_form().form
         
     def __retrieve_processing(self, pid: str):
-        return Form(FormsQuery(self.client).with_sub_forms().call_single(pid))  
+        return Form(self.client.query().with_sub_forms().call_single(pid))  
         
     async def __handle_processing(self, form: Form):         
         task = Task(self.client, self.function, form)

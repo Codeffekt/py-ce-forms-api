@@ -1,6 +1,5 @@
 import asyncio
-from ..api.client import APIClient
-from ..query import FormMutate
+from ..client import CeFormsClient
 from ..form import Form
 
 class Task():
@@ -9,7 +8,7 @@ class Task():
     using processing api
     """
     
-    def __init__(self, client: APIClient, function, form: Form) -> None:
+    def __init__(self, client: CeFormsClient, function, form: Form) -> None:
         self.client = client
         self.function = function
         self.form = form
@@ -34,7 +33,7 @@ class Task():
     def status(self):
         return self.form
     
-    def get_client(self) -> APIClient:
+    def get_client(self) -> CeFormsClient:
         return self.client
     
     def update(self, message: str):
@@ -55,7 +54,7 @@ class Task():
     
     def __update_processing_status(self, status: str) -> None:        
         self.form.set_value("status", status)
-        FormMutate(self.client).update_single(self.form.form)
+        self.client.mutation().update_single(self.form.form)
             
         
     

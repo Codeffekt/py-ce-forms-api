@@ -1,6 +1,6 @@
 import os
 from fastapi import FastAPI, APIRouter
-from ..api.client import APIClient
+from ..client import CeFormsClient
 from .task_pool import TaskPool
 
 app = FastAPI()
@@ -11,7 +11,7 @@ class Processing():
     long/async processing task
     """
     
-    def __init__(self, client: APIClient, func) -> None:
+    def __init__(self, client: CeFormsClient, func) -> None:
         self.server = "localhost"
         self.port = os.environ.get("CE_FORMS_TASK_PORT")       
         self.app = app   
