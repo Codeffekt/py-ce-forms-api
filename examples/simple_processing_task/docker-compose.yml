@@ -12,6 +12,6 @@ services:
     ports: 
       - "8000:8000"    
     environment:
-      CE_FORMS_BASE_URL: 
-      CE_FORMS_TOKEN:
+      - CE_FORMS_BASE_URL=http://localhost:3000
+      - CE_FORMS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJjZS1mb3Jtcy1hcGkiLCJzdWIiOiJjb250YWN0QGNvZGVmZmVrdC5jb20iLCJ1aWQiOiI3MjM5YmQwYy1kMDQwLTRmZTctOGJlYS0wYjY3YzZiNmVhNzMiLCJleHAiOjg1NzU5NDQ2MjIsImlhdCI6MTczMjYzMjYyMn0.-vQm3wyUSTijpbtL01_tRrfdmZCEWW2GGLfAaFYT6Tg
 

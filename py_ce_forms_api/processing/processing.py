@@ -25,7 +25,7 @@ class Processing():
     def get_app(self):
         return self.app        
     
-    async def __do_processing(self, pid: str):                
+    async def __do_processing(self, pid: str):                            
         
         if self.tasks.have_processing(pid):
             raise Exception(f"A processing is already running {pid}.")
