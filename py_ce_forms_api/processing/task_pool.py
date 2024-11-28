@@ -43,15 +43,28 @@ class TaskPool():
       
     def cancel(self, pid):
         task = self.find_task(pid)
-        task.cancel()
+        print(f'[TaskPool]: cancel task {task.id()}')
+        task.cancel()                
         return task.get_form().form
         
     def __retrieve_processing(self, pid: str):
         return Form(self.client.query().with_sub_forms().call_single(pid))  
         
-    async def __handle_processing(self, form: Form):         
-        task = Task(self.client, self.function, form)
-        self.tasks.append(task)
-        await task.run()                           
-        self.tasks = list(filter(lambda t: not t.is_current_processing(form.id()), self.tasks))
+    async def __handle_processing(self, form: Form):
+        try:            
+            task = Task(self.client, self.function, form)
+            self.tasks.append(task)
+            print(f'[TaskPool]: run task {task.id()}')
+            await task.run()                          
+            print(f'[TaskPool]: task {task.id()} finished')
+        except asyncio.CancelledError:
+            print(f'[TaskPool]: task {task.id()} cancelled')              
+        except Exception as err:
+            print(f'[TaskPool]: error from task {task.id()}', err)
+        finally:
+            self.__remove_task(task) 
+    
+    def __remove_task(self, task: Task):
+        self.tasks = list(filter(lambda t: not t.is_current_processing(task.id()), self.tasks))
+        
     
