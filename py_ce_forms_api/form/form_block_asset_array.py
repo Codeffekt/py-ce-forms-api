@@ -12,3 +12,12 @@ class FormBlockAssetArray:
     
     def get_ref(self) -> str:        
         return self.form_block.get_value()
+    
+    def get_block(self) -> FormBlock:
+        return self.form_block
+
+    def get_form_id(self) -> str:
+        return self.form_block.get_form().id()
+    
+    def get_field(self) -> str:
+        return self.form_block.get_field()

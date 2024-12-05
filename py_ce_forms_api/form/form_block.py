@@ -10,6 +10,7 @@ class FormBlock:
     COORDINATES_TYPE = "coordinates"
     FORM_ARRAY_TYPE = "formArray"
     ASSET_ARRAY_TYPE = "assetArray"
+    ASSET_TYPE = "asset"
     
     """
     An utility class to manipulate form block values
@@ -24,11 +25,14 @@ class FormBlock:
     def get_type(self):
         return self.block["type"]
     
-    def get_field(self):
+    def get_field(self) -> str:
         return self.block["field"]
     
     def get_block_attr(self, field: str):
         return self.block[field]
+    
+    def is_type_asset(self) -> bool:
+        return self.get_type() == FormBlock.ASSET_TYPE
     
     def get_value(self):
         if self.block["value"] is None:

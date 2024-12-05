@@ -1,4 +1,4 @@
-FROM python:3.10.12
+FROM python:3.10-slim
 COPY . /app
 RUN pip install fastapi
 RUN pip install uvicorn

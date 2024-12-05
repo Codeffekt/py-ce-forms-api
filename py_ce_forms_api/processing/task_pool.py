@@ -37,8 +37,13 @@ class TaskPool():
        return  next(t for t in self.tasks if t.is_current_processing(pid))
     
     def run(self, pid: str):
-        form = self.__retrieve_processing(pid)
+        form = self.__retrieve_processing(pid)        
         asyncio.create_task(self.__handle_processing(form))
+        return form        
+    
+    async def run_awaitable(self, pid: str):
+        form = self.__retrieve_processing(pid)        
+        await asyncio.create_task(self.__handle_processing(form))
         return form
       
     def cancel(self, pid):
