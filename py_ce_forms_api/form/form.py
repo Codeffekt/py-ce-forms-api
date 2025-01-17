@@ -8,10 +8,10 @@ class Form:
     """
     An utility class to manipulate form properties
     """
-    def __init__(self, form) -> None:        
+    def __init__(self, form) -> None:                        
         
-        if form is None:
-            raise TypeError("Invalid none form passed, maybe the underlying form was not found")
+        if form is None or form == {}:
+            raise TypeError("Invalid form passed, maybe the underlying form was not found")
         
         self.form = form
     

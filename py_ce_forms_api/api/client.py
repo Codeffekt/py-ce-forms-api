@@ -1,3 +1,4 @@
+from io import BufferedReader
 import os
 import requests
 from .bearer_auth import BearerAuth
@@ -49,6 +50,20 @@ class APIClient():
             module_name=module_name
         )           
     
+    def call_forms_root_query(self, params, module_name = FORMS_MODULE_NAME):        
+        return self.call_module(
+            func="getFormsRootQuery",
+            params=params,
+            module_name=module_name
+        )
+    
+    def call_get_root(self, params, module_name = FORMS_MODULE_NAME):
+        return self.call_module(
+            func="getRoot",
+            params=params,
+            module_name=module_name
+        )
+    
     def call_form_query(self, id: str, query, module_name = FORMS_MODULE_NAME):
         return self.call_module(
             func="getFormQuery",
@@ -67,7 +82,10 @@ class APIClient():
         return self._call(self._create_call_post(class_name, func_name, func_params))
     
     def call_upload(self, bucket_id: str, file_path, mimetype = "text/plain"):  
-        files = {'file': (os.path.basename(file_path), open(file_path, 'rb'), mimetype)}              
+        files = {'file': (os.path.basename(file_path), open(file_path, 'rb'), mimetype)}                      
+        return self.call_upload_files(bucket_id, files)
+    
+    def call_upload_files(self, bucket_id: str, files: dict):
         response = requests.post(
             self._get_api(f'assets/upload/{bucket_id}'),
             files=files,

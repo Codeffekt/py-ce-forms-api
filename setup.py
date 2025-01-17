@@ -5,7 +5,7 @@ from pathlib import Path
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
-VERSION = '0.1.6'
+VERSION = '0.1.7'
 DESCRIPTION = 'A Python library for the CeForms API.'
 
 setup(
@@ -30,5 +30,8 @@ setup(
         'Topic :: Software Development',
         'Topic :: Utilities',
         'License :: OSI Approved :: Apache Software License',            
-    ]
+    ],
+    entry_points = {
+        'console_scripts': ['py-ce-forms=py_ce_forms_api.cli.py_ce_forms:cli'],
+    }
 )

@@ -4,6 +4,7 @@ from .accounts.accounts import Accounts
 from .assets.assets import Assets
 from .processing_client.processing_client import ProcessingClient
 from .forms.forms import Forms
+from .roots.roots import Roots
 
 class CeFormsClient:
     """
@@ -89,6 +90,13 @@ class CeFormsClient:
         see :doc:`forms documentation <forms>` for full details.
         """
         return Forms(self.api)
+    
+    def roots(self):
+        """
+        Returns the module to manage CeForms roots.
+        see :doc:`roots documentation <roots>` for full details.
+        """
+        return Roots(self.api)
     
     
         

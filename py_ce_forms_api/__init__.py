@@ -7,5 +7,7 @@ from .assets import Assets, AssetElt
 from .processing import Processing, Task, TaskPool
 from .processing_client import ProcessingClient
 from .forms import Forms
+from .roots import Roots
+from .root import Root
 
 __title__ = 'py_ce_forms_api'

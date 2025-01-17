@@ -42,6 +42,7 @@ Replace <CE_FORMS_BASE_URL> and <CE_FORMS_TOKEN> with your actual base URL and a
   query_array
   accounts  
   forms
+  roots
   assets
   processing
   processing_client
