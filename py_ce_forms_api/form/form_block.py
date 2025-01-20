@@ -31,6 +31,9 @@ class FormBlock:
     def get_block_attr(self, field: str):
         return self.block[field]
     
+    def get_root(self):
+        return self.block["root"]
+    
     def is_type_asset(self) -> bool:
         return self.get_type() == FormBlock.ASSET_TYPE
     

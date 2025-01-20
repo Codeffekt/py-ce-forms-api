@@ -1,3 +1,6 @@
+## [0.1.8]
+ - Get block root
+
 ## [0.1.7]
  - Add support for str and BufferedStream in upload
  - Add form roots 
