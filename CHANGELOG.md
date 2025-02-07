@@ -1,3 +1,6 @@
+## [0.1.9]
+ - Add processing tasks to simplify the processing calls and provide a processing sync
+
 ## [0.1.8]
  - Get block root
 

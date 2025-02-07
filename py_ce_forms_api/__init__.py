@@ -4,7 +4,7 @@ from .query import FormsQuery, FormMutate, FormsRes, FormsResIterable, FormsQuer
 from .accounts import Accounts
 from .client import CeFormsClient
 from .assets import Assets, AssetElt
-from .processing import Processing, Task, TaskPool
+from .processing import Processing, ProcessingTasks, Task, TaskPool
 from .processing_client import ProcessingClient
 from .forms import Forms
 from .roots import Roots
