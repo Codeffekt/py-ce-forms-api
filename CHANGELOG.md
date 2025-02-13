@@ -1,3 +1,6 @@
+## [0.1.10]
+ - Add delete asset array
+
 ## [0.1.9]
  - Add processing tasks to simplify the processing calls and provide a processing sync
 

@@ -44,6 +44,17 @@ class Assets():
         asset = self.upload_file_to_bucket(bucket=bucket, file_path=file_path, mimetype=mimetype)
         return AssetElt(None, asset)
     
+    def delete_asset_array(self, block: FormBlockAssetArray, id: str, delete_file: bool = True):
+        """
+        Delete an asset from an asset array block
+        """
+        return self.client.call_module(module_name=ASSETS_MODULE_NAME, func="deleteAssetsArray", params=[
+            block.get_form_id(), 
+            block.get_field(), 
+            [id],
+            delete_file
+        ])
+    
     def download_file(self, id: str):
         """
         Download the asset.
