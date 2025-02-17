@@ -12,15 +12,16 @@ class APIClient():
     Example:
     
         >>> import ce_forms
-        >>> client = ce_forms.APIClient(base_url='', token='')
+        >>> client = ce_forms.APIClient(base_url='', token='', dir_path='')
         
     Args:
         base_url (str): URL to the CeForms API server.
         token (str): API token provided by a CeForms backend.
+        dir_path (str): local directory to store assets.
     
     """
     
-    def __init__(self, base_url=None, token=None):
+    def __init__(self, base_url=None, token=None, dir_path=None):
         super().__init__()
         
         if base_url is None:
@@ -33,12 +34,23 @@ class APIClient():
         else:    
             self.token = token            
         
+        if dir_path is None:
+            self.dir_path = os.environ.get("CE_FORMS_DIR_PATH")
+        else:
+            self.dir_path = dir_path
+        
         if self.base_url is None or self.token is None:
             raise TypeError("Invalid base_url or token None value")
         
     def self(self):
         response = requests.get(f'{self.base_url}/self', auth=BearerAuth(self.token))
         return response.json()
+    
+    def get_dir_path(self) -> str|None:
+        return self.dir_path
+    
+    def set_dir_path(self, dir_path: str):
+        self.dir_path = dir_path
     
     def call_module(self, func, params, module_name):
         return self.call(f'Public{module_name}', func_name=func, func_params=params)

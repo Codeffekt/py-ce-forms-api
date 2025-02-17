@@ -19,7 +19,11 @@ class CeFormsClient:
     
     .. envvar:: CE_FORMS_TOKEN
     
-        API token provided by a CeForms backend    
+        API token provided by a CeForms backend 
+        
+    .. envvar:: CE_FORMS_DIR_PATH
+    
+        Local directory path to manage assets   
     
     Example:
     
@@ -30,10 +34,15 @@ class CeFormsClient:
     Args:
         base_url (str): URL to the CeForms API server.
         token (str): API token provided by a CeForms backend.
+        dir_path (str): local directory to store assets.
     
     """
     def __init__(self, *args, **kwargs):
-        self.api = APIClient(*args, **kwargs)
+        self.api = APIClient(*args, **kwargs)        
+    
+    def with_dir_path(self, dir_path: str):
+        self.api.set_dir_path(dir_path)
+        return self
     
     def self(self):
         """
@@ -75,7 +84,7 @@ class CeFormsClient:
         Returns the module to manage assets (files, media).
         see :doc:`assets documentation <assets>` for full details.
         """
-        return Assets(self.api)    
+        return Assets(self.api)        
 
     def processing_client(self, pid):
         """

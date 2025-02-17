@@ -17,7 +17,8 @@ class FormsQuery():
         self.ref = None
         self.root = None
         self.call_args = []
-        
+        self.func = None
+                
     def with_root(self, root: str):
         self._add_query_field({
             "field": "root",
@@ -34,6 +35,10 @@ class FormsQuery():
         })
         return self
         
+    def with_func(self, func: str):
+        self.func = func
+        return self
+    
     def where(self, field: str, value: str, op = "="):
         self._add_query_field({
             "field": field,
@@ -79,9 +84,12 @@ class FormsQuery():
                     "ref": self.ref                    
                 }      
 
-    def call(self):                
-        return FormsRes(self.client.call_forms_query(
-            self.call_args + [ self._create_raw_query() ], self.module_name))        
+    def call(self):
+        params = self.call_args + [ self._create_raw_query() ]
+        if self.func is None:                
+            return FormsRes(self.client.call_forms_query(params, self.module_name))        
+        else:
+            return FormsRes(self.client.call_module(func=self.func, params=params, module_name=self.module_name))
 
     def call_single(self, id: str):
         return self.client.call_form_query(

@@ -18,6 +18,9 @@ class AssetElt():
     def original_name(self) -> str:
         return self.block_value["originalname"]
     
+    def ref(self) -> str:
+        return self.block_value["ref"]
+    
     def get_bytes(self) -> bytes:
         return self.data
     

@@ -4,7 +4,9 @@ import mimetypes
 from ..api.client import APIClient
 from ..api.modules import ASSETS_MODULE_NAME
 from ..form import FormBlockAssetArray, FormBlock
+from ..query import FormsResIterable, FormsQuery
 from .asset_elt import AssetElt
+from .asset_local_file_elt import AssetLocalFileElt
 
 class Assets():
     """
@@ -69,6 +71,17 @@ class Assets():
         if block_value is not None:
             data = self.download_file(block_value["id"])
         return AssetElt(data, block_value)
+    
+    def get_assets_from_array(self, block: FormBlockAssetArray):
+        return FormsResIterable(
+            FormsQuery(self.client)
+            .with_module_name(ASSETS_MODULE_NAME)
+            .with_func("getAssetsArrayQuery")
+            .with_args([ block.get_form_id(), block.get_field()])
+        )        
+    
+    def get_local_storage(self) -> AssetLocalFileElt:
+        return AssetLocalFileElt(self.client)
     
     def _find_mimetype_from_filename(self, filename: str): 
         mimetype = mimetypes.guess_type(filename)[0]        

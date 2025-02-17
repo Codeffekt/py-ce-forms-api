@@ -3,7 +3,7 @@ from .form import Form, FormBlock, FormBlockAssoc, FormBlockAssetArray, FormUtil
 from .query import FormsQuery, FormMutate, FormsRes, FormsResIterable, FormsQueryArray
 from .accounts import Accounts
 from .client import CeFormsClient
-from .assets import Assets, AssetElt
+from .assets import Assets, AssetElt, AssetLocalFileElt
 from .processing import Processing, ProcessingTasks, Task, TaskPool
 from .processing_client import ProcessingClient
 from .forms import Forms

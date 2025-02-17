@@ -20,7 +20,7 @@ class FormsRes():
         return self.res['elts']
     
     def total(self):
-        return self.res['total']
+        return int(self.res['total'])
     
     def limit(self):
         return self.res['limit']

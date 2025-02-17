@@ -1,3 +1,6 @@
+## [0.1.11]
+ - Add local storage for assets
+
 ## [0.1.10]
  - Add delete asset array
 
