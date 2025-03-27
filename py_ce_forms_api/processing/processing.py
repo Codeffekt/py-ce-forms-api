@@ -25,8 +25,9 @@ class Processing(ProcessingTasks):
     def get_app(self):
         return self.app        
     
-    async def __do_processing(self, pid: str):                            
-        return self.do_processing(pid)
+    async def __do_processing(self, pid: str):                        
+        res = await self.do_processing(pid)
+        return res
             
     def __cancel(self, pid: str):        
         return self.cancel(pid)       

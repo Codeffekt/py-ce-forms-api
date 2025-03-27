@@ -1,3 +1,6 @@
+## [0.1.12]
+ - fix: missing await for fastpi route processing
+
 ## [0.1.11]
  - Add local storage for assets
 
