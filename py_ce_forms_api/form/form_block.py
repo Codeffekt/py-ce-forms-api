@@ -15,7 +15,7 @@ class FormBlock:
     """
     An utility class to manipulate form block values
     """
-    def __init__(self, form, block) -> None:
+    def __init__(self, form, block) -> None:        
         self.form = form
         self.block = block
     
@@ -38,7 +38,7 @@ class FormBlock:
         return self.get_type() == FormBlock.ASSET_TYPE
     
     def get_value(self):
-        if self.block["value"] is None:
+        if "value" not in self.block or self.block["value"] is None:
             return None
         if self.block["type"] == FormBlock.NUMBER_TYPE:
             return self._get_float_value(self.block["value"])

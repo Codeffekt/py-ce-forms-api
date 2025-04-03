@@ -65,7 +65,7 @@ class Assets():
     
     def create_asset(self, block: FormBlock) -> AssetElt:
         if block.is_type_asset() == False:
-            raise Exception(f'block {block.get_field()} is not of type asset')
+            raise Exception(f'block {block.get_field()} from form {block.get_form().id()} is not of type asset')
         block_value = block.get_value()
         data = None
         if block_value is not None:

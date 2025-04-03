@@ -11,7 +11,7 @@ class FormMutate():
         self.client = client
         self.module_name = FORMS_MODULE_NAME
         
-    def update_single(self, form):
+    def update_single(self, form: Form):
         return Form(self.client.call_mutation({
             "type": "form",
             "op": "update",
@@ -31,3 +31,10 @@ class FormMutate():
             "indices": [block.get_form().id()],
             "formArrayField": block.get_field()
         }))
+    
+    def delete_single(self, form: Form):
+        return Form(self.client.call_mutation({
+            "type": "form",
+            "op": "delete",
+            "indices": [form.id()]
+        }, self.module_name))

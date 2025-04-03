@@ -1,3 +1,7 @@
+## [0.1.13]
+ - fix: error when asset has no value
+ - feat: add delete single form
+
 ## [0.1.12]
  - fix: missing await for fastpi route processing
 

@@ -6,6 +6,9 @@ class AssetElt():
         self.data = data
         self.block_value = block_value
     
+    def has_data(self) -> bool:
+        return self.data is not None
+    
     def id(self) -> str:
         return self.block_value["id"]
     
