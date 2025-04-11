@@ -1,3 +1,6 @@
+## [0.1.14]
+ - feat: retrieve assets with some originalname value
+
 ## [0.1.13]
  - fix: error when asset has no value
  - feat: add delete single form

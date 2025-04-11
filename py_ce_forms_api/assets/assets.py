@@ -72,13 +72,17 @@ class Assets():
             data = self.download_file(block_value["id"])
         return AssetElt(data, block_value)
     
-    def get_assets_from_array(self, block: FormBlockAssetArray):
+    def get_assets_from_array(self, block: FormBlockAssetArray, extra_query: FormsQuery = None):
+        query = FormsQuery(self.client) if extra_query is None else extra_query         
         return FormsResIterable(
-            FormsQuery(self.client)
+            query
             .with_module_name(ASSETS_MODULE_NAME)
             .with_func("getAssetsArrayQuery")
             .with_args([ block.get_form_id(), block.get_field()])
-        )        
+        )            
+    
+    def get_assets_with_original_name(self, block: FormBlockAssetArray, name: str):
+        return self.get_assets_from_array(block, FormsQuery(self.client).where("originalname", name))
     
     def get_local_storage(self) -> AssetLocalFileElt:
         return AssetLocalFileElt(self.client)
