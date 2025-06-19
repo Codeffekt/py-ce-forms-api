@@ -5,6 +5,7 @@ from .assets.assets import Assets
 from .processing_client.processing_client import ProcessingClient
 from .forms.forms import Forms
 from .roots.roots import Roots
+from .old_projects import OldProjects
 
 class CeFormsClient:
     """
@@ -106,6 +107,12 @@ class CeFormsClient:
         see :doc:`roots documentation <roots>` for full details.
         """
         return Roots(self.api)
+    
+    def old_projects(self):
+        """
+        Returns the module to manage Old Deprecated Projects forms.                
+        """
+        return OldProjects(self.api)
     
     
         

@@ -1,3 +1,6 @@
+## [0.1.15]
+ - feat: support for old deprecated project
+
 ## [0.1.14]
  - feat: retrieve assets with some originalname value
 
