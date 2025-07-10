@@ -1,6 +1,5 @@
 import sys
 from py_ce_forms_api import *
-import json
 
 def main(pid):
     old_projects = CeFormsClient().old_projects()
@@ -8,7 +7,7 @@ def main(pid):
 
     print(old_project)
     
-    print(json.dumps(old_project.form, indent=4))
+    print(JsonDump.form_to_str(old_project))
 
 if __name__ == '__main__':
     args = sys.argv[1:]

@@ -1,5 +1,6 @@
 ## [0.1.15]
  - feat: support for old deprecated project
+ - feat: support for json dump
 
 ## [0.1.14]
  - feat: retrieve assets with some originalname value

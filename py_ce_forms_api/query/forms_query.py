@@ -18,6 +18,7 @@ class FormsQuery():
         self.root = None
         self.call_args = []
         self.func = None
+        self.extra = None
                 
     def with_root(self, root: str):
         self._add_query_field({
@@ -63,6 +64,10 @@ class FormsQuery():
         self.ref = ref
         return self      
     
+    def with_extra(self, extra: dict):
+        self.extra = extra
+        return self
+    
     def with_module_name(self, module_name: str):
         self.module_name = module_name
         return self    
@@ -76,13 +81,14 @@ class FormsQuery():
         return self
     
     def _create_raw_query(self):
-        return {
+        raw_query ={
                     "extMode": self.extMode,
                     "limit": self.limit,
                     "offset": self.offset,
                     "queryFields": self.query_fields,
                     "ref": self.ref                    
-                }      
+                }  
+        return (raw_query | self.extra) if self.extra is not None else raw_query
 
     def call(self):
         params = self.call_args + [ self._create_raw_query() ]

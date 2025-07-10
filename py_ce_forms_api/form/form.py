@@ -1,10 +1,11 @@
 from __future__ import annotations
 from datetime import datetime
+from ..core import FormCore
 from .form_block import FormBlock
 from .form_block_assoc import FormBlockAssoc
 from .form_block_asset_array import FormBlockAssetArray 
 from .form_block_factory import FormBlockFactory
-class Form:
+class Form(FormCore):
     """
     An utility class to manipulate form properties
     """
@@ -14,6 +15,9 @@ class Form:
             raise TypeError("Invalid form passed, maybe the underlying form was not found")
         
         self.form = form
+    
+    def get_form(self):
+        return self.form
     
     def set_value(self, field: str, value):
         self.get_block(field).set_value(value)
