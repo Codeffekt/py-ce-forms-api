@@ -5,6 +5,7 @@ from .form_block import FormBlock
 from .form_block_assoc import FormBlockAssoc
 from .form_block_asset_array import FormBlockAssetArray 
 from .form_block_factory import FormBlockFactory
+
 class Form(FormCore):
     """
     An utility class to manipulate form properties
@@ -58,5 +59,14 @@ class Form(FormCore):
     
     def mtime(self) -> datetime|None:
         return datetime.fromtimestamp(self.form["mtime"] / 1000) if self.form.get("mtime") is not None else None
+    
+    def set_readonly(self, v: bool):
+        self.apply_on_blocks(lambda block: block.set_readonly(v))
+    
+    def apply_on_blocks(self, func: function):
+        for block in self.form["content"].values():
+            func(FormBlock(self, block))
+    
+    
             
     

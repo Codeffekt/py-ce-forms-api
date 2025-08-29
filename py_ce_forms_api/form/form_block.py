@@ -34,6 +34,9 @@ class FormBlock:
     def get_root(self):
         return self.block["root"]
     
+    def set_readonly(self, v: bool):
+        self.block["readonly"] = v
+    
     def is_type_asset(self) -> bool:
         return self.get_type() == FormBlock.ASSET_TYPE
     

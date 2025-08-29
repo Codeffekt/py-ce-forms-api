@@ -1,3 +1,7 @@
+## [0.1.16]
+ - feat: add form copy
+ - feat: add form readonly on all blocks
+
 ## [0.1.15]
  - feat: support for old deprecated project
  - feat: support for json dump
