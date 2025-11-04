@@ -37,10 +37,11 @@ class Form(FormCore):
         return FormBlockFactory.create_asset_array(self.get_block(field))
     
     def get_sub_form(self, field: str) -> Form:
-        if self.form.get("fields") is None or self.form["fields"].get(field) is None:
-            raise Exception(f"Form {self.id()} has no subform {field}")
-        return Form(self.form["fields"][field])
+        return self._get_stored_form("fields", field)
     
+    def get_node_form(self, field:str) -> Form:
+        return self._get_stored_form("nodes", field)
+
     def get_root(self) -> str:
         return self.form["root"]
     
@@ -66,6 +67,11 @@ class Form(FormCore):
     def apply_on_blocks(self, func: function):
         for block in self.form["content"].values():
             func(FormBlock(self, block))
+    
+    def _get_stored_form(self, part: str, field:str) -> Form:
+        if self.form.get(part) is None or self.form[part].get(field) is None:
+            raise Exception(f"Form {self.id()} has no subform {field}")
+        return Form(self.form[part][field])    
     
     
             

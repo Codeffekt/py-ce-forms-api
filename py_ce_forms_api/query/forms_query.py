@@ -1,6 +1,7 @@
 from ..api.client import APIClient
 from ..api.modules import *
 from .forms_res import FormsRes
+from .form_query_node import FormQueryNode
 
 class FormsQuery():
     """
@@ -13,6 +14,7 @@ class FormsQuery():
         self.extMode = False
         self.client = client
         self.query_fields = []
+        self.nodes = []
         self.module_name = FORMS_MODULE_NAME
         self.ref = None
         self.root = None
@@ -76,16 +78,31 @@ class FormsQuery():
         self.call_args = args
         return self
     
+    def with_node(self, node: FormQueryNode):
+        self._add_query_node(node.asDict())
+        return self
+
+    def with_nodes(self, nodes: list[FormQueryNode]):
+        for node in nodes:
+            self._add_query_node(node.asDict())
+        return self
+
     def _add_query_field(self, qf):
         self.query_fields.append(qf)
         return self
-    
+
+    def _add_query_node(self, qn):
+        self.nodes.append(qn)
+        return self
+
+
     def _create_raw_query(self):
         raw_query ={
                     "extMode": self.extMode,
                     "limit": self.limit,
                     "offset": self.offset,
                     "queryFields": self.query_fields,
+                    "nodes": self.nodes,
                     "ref": self.ref                    
                 }  
         return (raw_query | self.extra) if self.extra is not None else raw_query

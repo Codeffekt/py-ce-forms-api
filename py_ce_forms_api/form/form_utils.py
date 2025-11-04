@@ -15,6 +15,6 @@ class FormUtils:
     
     
     def eval(form, value: str) -> str:
-        return re.sub('{(\$?\w+)}', lambda m: FormUtils.__match_func(m, form), value)
+        return re.sub('{(\\$?\\w+)}', lambda m: FormUtils.__match_func(m, form), value)
     
     

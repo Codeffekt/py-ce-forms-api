@@ -1,3 +1,6 @@
+## [0.1.17]
+ - feat: add support for query nodes
+
 ## [0.1.16]
  - feat: add form copy
  - feat: add form readonly on all blocks

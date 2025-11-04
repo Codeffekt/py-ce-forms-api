@@ -1,7 +1,7 @@
 from .core import FormCore
 from .api import APIClient
 from .form import Form, FormBlock, FormBlockAssoc, FormBlockAssetArray, FormUtils, FormBlockFactory
-from .query import FormsQuery, FormMutate, FormsRes, FormsResIterable, FormsQueryArray
+from .query import FormsQuery, FormMutate, FormsRes, FormsResIterable, FormsQueryArray, FormQueryNode
 from .accounts import Accounts
 from .client import CeFormsClient
 from .assets import Assets, AssetElt, AssetLocalFileElt
