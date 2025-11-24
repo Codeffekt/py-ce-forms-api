@@ -12,6 +12,6 @@ from .roots import Roots
 from .root import Root
 from .old_projects import OldProjects
 from .old_project import OldProject, OldProjectBlock
-from .io import JsonDump
+from .io import JsonDump, MdDump
 
 __title__ = 'py_ce_forms_api'

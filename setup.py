@@ -5,7 +5,7 @@ from pathlib import Path
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
-VERSION = '0.1.16'
+VERSION = '0.1.17'
 DESCRIPTION = 'A Python library for the CeForms API.'
 
 setup(

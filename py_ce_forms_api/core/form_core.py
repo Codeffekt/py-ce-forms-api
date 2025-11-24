@@ -5,3 +5,7 @@ class FormCore(ABC):
     @abstractmethod
     def get_form(self) -> dict:
         pass
+    
+    @abstractmethod
+    def id(self) -> str:
+        pass

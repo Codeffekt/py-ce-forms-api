@@ -1,5 +1,7 @@
 ## [0.1.17]
  - feat: add support for query nodes
+ - feat: CE_FORMS_TASK_TOKEN used to auth processing tasks
+ - feat: add save roots examples
 
 ## [0.1.16]
  - feat: add form copy

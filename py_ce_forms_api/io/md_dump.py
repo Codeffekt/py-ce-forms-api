@@ -1,29 +1,41 @@
-from ..core import FormCore
+from ..form import Form, FormBlock
 from ..query import FormsRes, FormsResIterable
 
 class MdDump:
         
-   def form_to_str(form: FormCore):
-       return MdDump._dumps(form.get_form())
+   def form_to_str(form: Form):
+       return MdDump._dump(form)
     
-   def list_to_str(elts: list[FormCore]):
-       return MdDump._dumps([form.get_form() for form in elts])
+   def list_to_str(elts: list[Form]):
+       return MdDump._dumps(elts)
    
    def res_to_str(res: FormsRes):
-       return MdDump._dumps([form.get_form() for form in res])
-   
-   def res_to_file(res: FormsRes, file):
-       return MdDump._dump([form.get_form() for form in res], file)
+       return [MdDump._dump(form) for form in res]   
    
    def iter_to_str(iter: FormsResIterable):       
-       return MdDump._dumps([form.get_form() for forms in iter for form in forms.forms()])
+       return MdDump._dumps([form for forms in iter for form in forms.forms()])
    
-   def iter_to_file(iter: FormsResIterable, file):
-       return MdDump._dump([form.get_form() for forms in iter for form in forms.forms()], file)
+   def _dumps(elts: list[Form]):    
+       str = '\n'.join([MdDump._dump(form) for form in elts])
+       return str
    
-   def _dumps(elt: dict):
-       return json.dumps(elt, indent=JSON_IDENT)
+   def _dump(form: Form):           
+       return '\n'.join([
+           MdDump._dump_header(form),
+           MdDump._dump_blocks(form),
+           MdDump._dump_nodes(form)
+       ])
+   def _dump_header(form: Form):
+       return f'Form {form.get_root()} ({form.id()})'
    
-   def _dump(elt: dict, file):
-       return json.dump(elt, file, indent=JSON_IDENT)
-    
+   def _dump_blocks(form: Form):
+       elts = [MdDump._dump_block(block) for block in form.get_blocks()]
+       return 'Fields ' + ','.join(elts)       
+
+   def _dump_block(block: FormBlock):       
+       return f'{block.get_field()} ({block.get_type()})'
+   
+   def _dump_nodes(form: Form):
+       nodes = form.get_nodes_forms()
+       elts = [MdDump._dump_header(node) for node in nodes]
+       return 'Nodes ' + ','.join(elts)
