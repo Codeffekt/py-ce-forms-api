@@ -1,3 +1,19 @@
+## [0.1.18]
+ - fix: a processing task always reaches a terminal status. `CancelledError` and other `BaseException` no longer escape unreported, terminal writes are retried, and a last-resort `finally` fails the form rather than leaving it `RUNNING`
+ - fix: the first terminal status wins. A completion can no longer overwrite a cancellation, nor an `update()` reset a reported error
+ - fix: `Task.cancel()` schedules the asyncio cancellation through the owning loop instead of touching the task from the FastAPI thread pool, and no longer raises when the work has not started yet
+ - fix: `TaskPool` keeps a strong reference to the tasks it schedules, so the garbage collector cannot drop one mid-execution
+ - fix: a failing `ProcessingClient.start()` marks the form `ERROR` instead of leaving it `PENDING`, a state it could never be started or cancelled out of
+ - fix: `ProcessingClient.cancel()` no longer writes `PENDING`; a failed cancel leaves the status untouched
+ - feat: a task function declared `def` is run off the event loop, so blocking work no longer freezes the server. It used to raise `TypeError: a coroutine was expected`
+ - feat: add `Task.done(message)` to terminate a task explicitly, and `Task.run_blocking(fn, ...)` to offload a blocking call from an `async def` task function
+ - feat: add `ProcessingTasks.reconcile(pids, older_than, apply)` to recover forms stranded by a killed process, reporting without writing by default
+ - feat: stopping the server finalises every in-flight task as `CANCELED`
+ - test: add the pytest test suite (`make test`), no backend required
+ - fix: the distribution no longer ships a top-level `tests` package, which would land in site-packages and shadow another project's `tests`
+ - fix: FormsRes is now iterable, which unlocks JsonDump.res_to_str/res_to_file and MdDump.res_to_str
+ - fix: FormBlock.set_value stores a datetime in milliseconds, so the timestamp round-trip is correct
+
 ## [0.1.17]
  - feat: add support for query nodes
  - feat: CE_FORMS_TASK_TOKEN used to auth processing tasks

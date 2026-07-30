@@ -5,7 +5,7 @@ from pathlib import Path
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
-VERSION = '0.1.17'
+VERSION = '0.1.18'
 DESCRIPTION = 'A Python library for the CeForms API.'
 
 setup(
@@ -16,7 +16,7 @@ setup(
     description=DESCRIPTION,
     long_description=long_description,
     long_description_content_type='text/markdown',
-    packages=find_packages(),
+    packages=find_packages(exclude=['tests', 'tests.*']),
     install_requires=['requests','fastapi','uvicorn'],
     extras_require={
         'test': ['pytest>=8.0', 'pytest-cov>=5.0', 'responses>=0.25', 'httpx>=0.27'],
