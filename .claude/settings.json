@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Read",
+      "Write",
+      "Edit",
+      "Bash(git:*)",
+      "Bash(npx opsx:*)",
+      "Bash(npx openspec:*)",
+      "Skill(opsx:*)",
+      "Skill(openspec-*)"     
+    ]
+  }
+}
