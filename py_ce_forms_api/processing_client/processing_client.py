@@ -17,15 +17,28 @@ class ProcessingClient():
         self.pid = pid
         self.__retrieve_processing_data()
     
-    def start(self):        
-        if not self.is_started():
-            self.__update_processing_status("PENDING")
-            return self.__api_call(self.__get_api_endpoint(f"processing/{self.processing_data.id()}"))
-        return self.processing_data
-    
-    def cancel(self):
+    def start(self):
         if self.is_started():
-            self.__update_processing_status("PENDING")
+            return self.processing_data
+
+        # PENDING is written before the call, not after: the endpoint returns as
+        # soon as the task is scheduled, by which time the server may already
+        # have written RUNNING, and writing PENDING then would overwrite it.
+        self.__update_processing_status("PENDING")
+
+        try:
+            return self.__api_call(self.__get_api_endpoint(f"processing/{self.processing_data.id()}"))
+        except Exception as err:
+            # Rolling forward to ERROR rather than back: the start did fail, and
+            # it leaves is_started() False so the form can be started again.
+            self.__report_failure(f"failed to start the processing: {err}")
+            raise
+
+    def cancel(self):
+        # No status is written here: the server owns the CANCELED transition. If
+        # the call fails, the form keeps its real status instead of being
+        # degraded to an unrecoverable PENDING.
+        if self.is_started():
             return self.__api_call(self.__get_api_endpoint(f"cancel/{self.processing_data.id()}"))
         return self.processing_data
     
@@ -47,7 +60,12 @@ class ProcessingClient():
                
         self.endpoint = self.processing_data.get_sub_form("endpoint")
         
-    def __update_processing_status(self, status: str) -> None:        
+    def __report_failure(self, message: str) -> None:
+        if "message" in self.processing_data.form.get("content", {}):
+            self.processing_data.set_value("message", message)
+        self.__update_processing_status("ERROR")
+
+    def __update_processing_status(self, status: str) -> None:
         self.processing_data.set_value("status", status)
         FormMutate(self.client).update_single(self.processing_data.form)
         

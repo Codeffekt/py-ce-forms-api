@@ -5,17 +5,15 @@ class FormsRes():
     An utility class to manage query results on the forms dataset
     """
     
-    def __init__(self, res) -> None:        
+    def __init__(self, res) -> None:
         self.res = res
-        
+
         if self.res is None:
-            raise TypeError('Invalid result type None')        
-        
-        self._forms = map(lambda f: Form(f), self.elts())
-    
+            raise TypeError('Invalid result type None')
+
     def forms(self):
-        return self._forms
-    
+        return iter(self)
+
     def elts(self):
         return self.res['elts']
     
@@ -27,6 +25,9 @@ class FormsRes():
 
     def offset(self):
         return self.res['offset']
+
+    def __iter__(self):
+        return map(lambda f: Form(f), self.elts())
 
     def __len__(self):
         return len(self.res['elts'])

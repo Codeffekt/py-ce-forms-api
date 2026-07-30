@@ -18,6 +18,9 @@ setup(
     long_description_content_type='text/markdown',
     packages=find_packages(),
     install_requires=['requests','fastapi','uvicorn'],
+    extras_require={
+        'test': ['pytest>=8.0', 'pytest-cov>=5.0', 'responses>=0.25', 'httpx>=0.27'],
+    },
     keywords=['python', 'ceforms', 'api'],
     classifiers=[
         "Development Status :: 3 - Alpha",

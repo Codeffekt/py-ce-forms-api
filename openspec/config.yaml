@@ -1,0 +1,99 @@
+schema: spec-driven
+
+context: |
+  Project: py-ce-forms-api — Python SDK (client library + CLI) for the CeForms API.
+  Published on PyPI as `py_ce_forms_api`; docs on readthedocs (Sphinx).
+
+  Tech stack:
+    - Python 3.10+ (uses `str|None`, `list[Form]`, `from __future__ import annotations`)
+    - Runtime deps: requests (HTTP), fastapi + uvicorn (processing server)
+    - Packaging: setuptools via setup.py (VERSION constant), twine for publish
+    - Docs: Sphinx reStructuredText in docs/source, autodoc on docstrings
+    - Tests: pytest + pytest-cov + responses (HTTP mocking) + httpx (fastapi
+      TestClient), config in pytest.ini, dev deps in requirements-dev.txt and
+      in the `test` extra of setup.py. Entry points: `make test`, `make test-cov`,
+      `make venv`. CI runs the suite on Python 3.10/3.11/3.12
+      (.github/workflows/tests.yml).
+    - No linter/formatter config in the repo today
+
+  Architecture (package `py_ce_forms_api/`):
+    - api/         APIClient: low-level HTTP layer. Everything goes through
+                   POST {base_url}/api with a `{"__class": "Public<Module>",
+                   "call": {"function", "params"}}` envelope, Bearer auth.
+                   Module names in api/modules.py (Forms, Assets, Project).
+                   Errors raised as APIError.
+    - client.py    CeFormsClient: public facade. Each feature area is exposed as
+                   a method returning a module object (query(), query_array(),
+                   mutation(), accounts(), assets(), forms(), roots(),
+                   processing_client(pid), old_projects()).
+    - query/       FormsQuery / FormsQueryArray / FormMutate builders, plus
+                   FormsRes and FormsResIterable (paginated iteration) and
+                   FormQueryNode.
+    - form/        Form + FormBlock wrappers over the raw dict payload
+                   (form["content"][field]), specialised blocks via
+                   FormBlockFactory (assoc, asset array).
+    - forms/, roots/, root/, accounts/, assets/  feature modules taking an
+                   APIClient in their constructor.
+    - processing/  FastAPI server (Processing, ProcessingTasks, TaskPool, Task)
+                   for long-running async tasks.
+    - processing_client/  client side to start/cancel/poll a processing.
+    - old_project(s)/  legacy "Project" module support (deprecated backend).
+    - io/          JsonDump / MdDump serialisation helpers.
+    - cli/         argparse entry point `py-ce-forms` (see setup.py console_scripts).
+
+  Tests (`tests/`, see tests/README.md):
+    - One test file per feature area (test_form.py, test_query.py, test_assets.py,
+      test_processing.py, ...) plus test_end_to_end.py which exercises full paths
+      through the real stack with only HTTP mocked.
+    - No test touches the network. Two levels of doubles, both in tests/conftest.py:
+        * `mocked_responses` fixture (lib `responses`) intercepts `requests` — used
+          for APIClient and end-to-end tests.
+        * `FakeAPIClient` replaces APIClient for everything above the transport: it
+          records calls (`client.calls`, `client.last_call`) and replays canned
+          answers passed to its constructor, e.g. `fake_client(call_mutation={...})`.
+      Add a method to FakeAPIClient whenever APIClient gains a `call_*` method.
+    - Autouse fixture `clean_env` unsets every CE_FORMS_* variable, so the suite never
+      depends on the developer's local configuration.
+    - Payloads are built with the `make_form_dict()` / `make_block()` factories
+      (also exposed as the `form_factory` / `block_factory` fixtures), never
+      hand-copied JSON.
+    - Tests marked `integration` hit a real backend and are deselected by default
+      (`addopts = -m "not integration"`).
+
+  Conventions:
+    - Builder/fluent style: `with_xxx()` and `where()` methods return `self`,
+      terminal call is `.call()` / `.call_single()`.
+    - Feature modules receive `APIClient` (not CeFormsClient) as first arg.
+    - Public symbols are re-exported from each subpackage `__init__.py` and from
+      the top-level `py_ce_forms_api/__init__.py`.
+    - Private helpers prefixed with `_` or `__`; docstrings are Sphinx-style
+      (Args:, Example:, :doc: cross-references).
+    - Configuration comes from environment variables: CE_FORMS_BASE_URL,
+      CE_FORMS_TOKEN, CE_FORMS_DIR_PATH, CE_FORMS_TASK_PORT, CE_FORMS_TASK_TOKEN
+      (constructor arguments take precedence over env vars).
+    - Runnable usage samples live in `examples/<feature_name>/main.py`.
+    - CHANGELOG.md is maintained by hand, newest version first, entries prefixed
+      `feat:` / `fix:`, and kept in sync with VERSION in setup.py.
+
+  Domain: a CeForms "form" is a JSON document with an `id`, a `root` (its schema
+  / template id), typed `content` blocks, optional `fields` sub-forms and `nodes`
+  child forms. Roots describe form types; assets are files attached to blocks.
+
+rules:
+  proposal:
+    - State which public surface changes (CeFormsClient methods, exported symbols, CLI flags) and whether it is backward compatible.
+    - Call out any new environment variable or new runtime dependency explicitly.
+  design:
+    - Only write a design doc when the change touches the APIClient transport layer, adds a new top-level module, or changes the processing/task lifecycle.
+    - Show the CeForms API call envelope (module name, function name, params) for any new backend call.
+  specs:
+    - Write requirements against the public SDK surface (what a user of the library can call and observe), not internal helpers.
+  tasks:
+    - Include a task for exporting new public symbols in the relevant `__init__.py` and the top-level package `__init__.py`.
+    - Include a task for the Sphinx docs (docs/source/*.rst) whenever a new public module or client method is added.
+    - Include a task adding or updating a runnable sample under `examples/<feature_name>/main.py` for any user-facing feature.
+    - Include a task updating CHANGELOG.md, and bumping VERSION in setup.py when the change is meant to be released.
+    - Include a task adding or updating tests under `tests/`, in the file matching the feature area; a change is not done until `make test` passes.
+    - Any new backend call must be covered by a test asserting the exact envelope (module name, function name, params) sent to the API, via `FakeAPIClient.last_call` or `mocked_responses`.
+    - When a bug is found but deliberately left unfixed, add a `@pytest.mark.xfail(strict=True, reason=...)` test documenting it rather than skipping it.
+    - A new runtime dependency must be reflected in requirements-dev.txt / the `test` extra only if the tests need it; never add a test-only dependency to `install_requires`.

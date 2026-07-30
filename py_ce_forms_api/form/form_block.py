@@ -70,7 +70,8 @@ class FormBlock:
             self.block["value"] = value
             return
         if self.block["type"] == FormBlock.TIMESTAMP_TYPE and type(value) == datetime:
-            self.block["value"] = int(value.timestamp())
+            # stored in milliseconds, as read back by get_value
+            self.block["value"] = int(value.timestamp() * 1000)
             return
         self.block["value"] = value
 

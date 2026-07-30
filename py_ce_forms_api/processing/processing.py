@@ -30,7 +30,9 @@ class Processing(ProcessingTasks):
         self.router.add_api_route("/", self.self, methods=["GET"])    
         self.router.add_api_route("/processing/{pid}", self.__do_processing, methods=["GET"])
         self.router.add_api_route("/cancel/{pid}", self.__cancel, methods=["GET"])
-        self.app.include_router(self.router)                    
+        self.app.include_router(self.router)
+        # Without this, a SIGTERM or a reload leaves every in-flight form RUNNING.
+        self.app.add_event_handler("shutdown", self.shutdown)
 
     def get_app(self):
         return self.app        
